@@ -28,6 +28,8 @@
  <script setup>
 import { reactive } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
+import axios from 'axios';
+
 
  const data = reactive({
        name: '',
@@ -36,8 +38,12 @@ import { computed } from "@vue/runtime-core";
        gender: '',
       })
   
-      function sendData() {
+     async function sendData() {
         console.log(data);
+        console.log(await axios({
+        url: 'http://localhost:3000/api/records',
+        method: 'post',
+       }));
       }
 
     
