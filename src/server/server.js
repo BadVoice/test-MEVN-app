@@ -1,19 +1,24 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const path = require('path');
 
-const app = express()
+const express = require("express")
+const bodyParser = require('body-parser')
+const mongoose = require("mongoose")
+const http = require('http')
 
-app.set('port', 3000)
+// Set up a connection to the database
+mongoose.connect(
+    'mongodb://localhost:27017/mevnshop',{
+    
+    }
+)
 
- mongoose.connect('mongodb://localhost:27017/mevn-course', { useNewUrlParser: true })
- .then(db => console.log('[OK] DB is connected'))
- .catch(err => console.error(err))
+// init app 
+const app = express()  // middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
- app.use(express.json());
- app.use(express.urlencoded({extended: false}));
- app.use(morgan('dev'));
+// Declare Routes
+const PORT = 3000
+http.createServer({}, app).listen(3000)
+console.log(`Server running at ${PORT}`)
 
- app.use('/api/records', require('./routes/records'));
- app.use('/', express.static(path.join(__dirname, '../dist')));
+
